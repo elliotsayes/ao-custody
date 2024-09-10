@@ -72,9 +72,30 @@ SELECT ProcessId FROM Wallet WHERE WalletId = ?;
   }
 end
 
+local function getProcessWallet(processId: string): WalletEntry
+  local stmt = DB:prepare[[
+SELECT WalletId FROM Wallet WHERE ProcessId = ?;
+]]
+  stmt:bind_values(processId)
+  if stmt:step() == sqlite.ROW then
+    local value = stmt:get_value(0)
+    stmt:finalize()
+    return {
+      WalletId = value as string,
+      ProcessId = processId
+    }
+  end
+  stmt:finalize()
+  return {
+    WalletId = nil,
+    ProcessId = nil
+  }
+end
+
 return {
   InitializeDb = initializeDb,
   InsertWallet = insertWallet,
   SetWalletProcess = setWalletProcess,
-  GetWalletProcess = getWalletProcess
+  GetWalletProcess = getWalletProcess,
+  GetProcessWallet = getProcessWallet
 }
