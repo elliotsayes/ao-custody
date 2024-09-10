@@ -236,8 +236,8 @@ end
 local math_type = math.type
 local math_floor = math.floor
 local math_abs = math.abs
-local math_ceil = math.ceil
-local math_modf = math.modf
+-- local math_ceil = math.ceil
+-- local math_modf = math.modf
 local math_mininteger = math.mininteger
 local math_maxinteger = math.maxinteger
 local math_max = math.max
@@ -649,7 +649,7 @@ function bint.tonumber(x: BigInteger): number
   print('warning: too big for int, casting to number, potential precision loss')
   return tonumber(x)
 end
-local bint_tonumber: function(x: BigInteger): number = bint.tonumber
+-- local bint_tonumber: function(x: BigInteger): number = bint.tonumber
 
 -- Compute base letters to use in bint.tobase
 local BASE_LETTERS = {}
