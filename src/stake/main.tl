@@ -1,4 +1,4 @@
-local bint = require('token.utils.bint')(256)
+local bint = require('..utils.bint')(256)
 local rxJson = require('json')
 local dummy_package = require('dummy.dummy')
 dummy_package.print_dummy(1)

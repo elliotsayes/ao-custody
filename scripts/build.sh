@@ -15,8 +15,8 @@ cyan build -u
 
 cd build-lua
 
-amalg.lua -s token/main.lua -o ../build/token.lua \
-    token.utils.bint token.utils.tl-utils \
+amalg.lua -s stake/main.lua -o ../build/stake.lua \
+    utils.bint utils.tl-utils \
     dummy.dummy
 
 
