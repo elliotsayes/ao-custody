@@ -24,6 +24,15 @@ local function newmodule(selfId)
     if _G.IsInUnitTest then return end
 
     local msg = _my.formatMsg(rawMsg)
+    msg['reply'] = function(tags)
+      local reply = _my.formatMsg({
+        Target = msg.From,
+        From = msg.Target,
+        Tags = tags
+      })
+      reply['Tags']['Reference'] = tags['Reference'] or msg.Id
+      ao.send(reply)
+    end
 
     if msg.Target == _G.Owner then
       printVerb(2)('⚠️ Skip handle: Message from ' .. msg.From .. ' to agent owner: ' .. tostring(msg.Action))

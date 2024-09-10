@@ -20,7 +20,7 @@ global record Handlers
     hasMatchingTag: function(tag: string, value: string): MatchedHandler
     hasMatchingTagOf: function(tag: string, values: {string}): MatchedHandler
     hasMatchingData: function(value: string): MatchedHandler
-    reply: function(input: string | {string: string}): nil
+    reply: function(input: string | {string: string}): function (msg: Message): nil
     continue: function<F>(fn: F): F
   end
 end
@@ -32,6 +32,7 @@ global record Message
   Tags: { string: string }
   Data: string
   Owner: string
+  reply: function({string: string}): nil
 end
 
 global record TokenNotice

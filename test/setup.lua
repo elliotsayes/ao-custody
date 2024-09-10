@@ -33,6 +33,15 @@ local function mockedRequire(moduleName)
     return originalRequire("lsqlite3complete")
   end
 
+  if moduleName == "luassert.namespaces" then
+    return originalRequire(moduleName)
+  end
+
+  local mockPrefix = "mocked-env."
+  if string.sub(moduleName, 0, string.len(mockPrefix)) == mockPrefix then
+    return originalRequire("test." .. moduleName)
+  end
+
   return originalRequire("build-lua." .. moduleName)
 end
 
