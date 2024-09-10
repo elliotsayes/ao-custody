@@ -4,10 +4,14 @@
   "main": "index.js",
   "scripts": {
     "build": "bash ./scripts/build.sh",
+    "clean": "rimraf ./build-lua ./build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
 }
