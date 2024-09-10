@@ -3,13 +3,14 @@ global record ao
   send: function(message: {string: string})
   record env
     record Module
-      id: string
+      Id: string
     end
     record Process
       Tags: { string: string }
       Owner: string
     end
   end
+  spawn: function(module: string, tags: {string: string}): Message
 end
 
 global type MatchedHandler = function(msg: Message): function | nil
