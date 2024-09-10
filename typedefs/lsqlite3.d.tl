@@ -15,6 +15,7 @@ end
 local record lsqlite3
   OK: number
   ROW: number
+  DONE: number
 
   open_memory: function(): DB
 end

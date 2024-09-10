@@ -5,9 +5,9 @@
   "scripts": {
     "build": "bash ./scripts/build.sh",
     "clean": "rimraf ./build-lua ./build",
+    "test": "npm run build && bash ./scripts/test.sh",
     "deploy": "WALLET_JSON=\"$(cat ./.secret/wallet.json)\" aoform apply",
-    "generate-wallet": "npx -yes @permaweb/wallet > ./.secret/wallet.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate-wallet": "npx -yes @permaweb/wallet > ./.secret/wallet.json"
   },
   "keywords": [],
   "author": "",
