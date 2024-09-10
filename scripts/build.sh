@@ -16,6 +16,7 @@ cyan build -u
 cd build-lua
 
 amalg.lua -s stake/main.lua -o ../build/stake.lua \
+    stake.index \
     utils.bint utils.tl-utils \
     dummy.dummy
 
