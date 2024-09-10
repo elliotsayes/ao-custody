@@ -13,7 +13,7 @@ end
 
 local stake_index = require "stake.index"
 
-describe("rewards", function()
+describe("stake.index", function()
   setup(function()
   end)
 
