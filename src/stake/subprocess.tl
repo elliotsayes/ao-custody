@@ -12,28 +12,39 @@ local function spawnProcess(walletId: string): string
 end
 
 local function configureProcess(processId: string, walletId: string)
-  local req = ao.send({
+  ao.send({
     Target = processId,
-    Action = "EvalAck",
+    Action = "Eval",
     Data = [[
+INDEX_PROCESS = "]] .. ao.id .. [["
 BENEFICIARY_ADDRESS = "]] .. walletId .. [["
-ALLOW_THIRD_PARTY_STAKE = true
-WITHDRAW_TO_THIRD_PARTY = true
+
 ao.addAssignable("CUSTODY_SRC_MSG", {
   Id = "]] .. CUSTODY_SRC_MSG .. [["
 })
+
+ao.send({
+  Target = INDEX_PROCESS,
+  Action = "ConfigureAck"
+})
 ]]
   })
-  local res = req.receive()
-  if res == nil then
-    error("Failed to configure process")
-  end
+
+  Handlers.receive({
+    From = processId,
+    Action = "ConfigureAck"
+  })
 end
 
 local function loadSource(processId: string)
   ao.assign({
     Processes = { processId },
     Message = CUSTODY_SRC_MSG
+  })
+
+  Handlers.receive({
+    From = processId,
+    Action = "SourceAck"
   })
 end
 

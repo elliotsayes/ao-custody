@@ -18,6 +18,7 @@ global type MatchedHandler = function(msg: Message): function | nil
 
 global record Handlers
   add: function
+  receive: function
   record utils
     hasMatchingTag: function(tag: string, value: string): MatchedHandler
     hasMatchingTagOf: function(tag: string, values: {string}): MatchedHandler
