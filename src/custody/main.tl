@@ -1,4 +1,5 @@
 require('custody.const')
+require('custody.subscription')
 local handlers = require('custody.handlers')
 
 Handlers.add(
