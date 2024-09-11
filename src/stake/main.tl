@@ -9,6 +9,12 @@ if not IsInitialized then
 end
 
 Handlers.add(
+  "Info",
+  Handlers.utils.hasMatchingTag("Action", "Info"),
+  handlers.Info
+)
+
+Handlers.add(
   "Custody-Index.Get-Wallet",
   Handlers.utils.hasMatchingTag("Action", "Custody-Index.Get-Wallet"),
   handlers.GetWallet

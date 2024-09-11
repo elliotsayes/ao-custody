@@ -96,10 +96,42 @@ SELECT WalletId FROM Wallet WHERE ProcessId = ?;
   }
 end
 
+local record WalletStats
+  Total: number
+  Active: number
+  Pending: number
+end
+
+local function getWalletStats(): WalletStats
+  -- Query both rows, and rows with process Id set
+  local stmt = DB:prepare[[
+SELECT COUNT(*) FROM Wallet;
+]]
+  stmt:step()
+  local total = stmt:get_value(0) as number
+  stmt:finalize()
+
+  stmt = DB:prepare[[
+SELECT COUNT(*) FROM Wallet WHERE ProcessId IS NOT NULL;
+]]
+  stmt:step()
+  local active = stmt:get_value(0) as number
+  stmt:finalize()
+
+  local pending = total - active
+
+  return {
+    Total = total as number,
+    Active = active as number,
+    Pending = pending as number
+  }
+end
+
 return {
   InitializeDb = initializeDb,
   InsertWallet = insertWallet,
   SetWalletProcess = setWalletProcess,
   GetWalletProcess = getWalletProcess,
-  GetProcessWallet = getProcessWallet
+  GetProcessWallet = getProcessWallet,
+  GetWalletStats = getWalletStats
 }

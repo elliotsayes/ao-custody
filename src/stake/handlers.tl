@@ -51,9 +51,27 @@ local function createCustody(msg: Message): any
   subprocess.LoadSource(processId)
 
   index.SetWalletProcess(walletId, processId)
+
+  msg.reply({
+    Status = "Complete",
+    WalletId = walletId,
+    ProcessId = processId,
+  })
+end
+
+local function info(msg: Message): any
+  local stats = index.GetWalletStats()
+
+  msg.reply({
+    Protocol = "Custody-Index",
+    Total = tostring(stats.Total),
+    Active = tostring(stats.Active),
+    Pending = tostring(stats.Pending),
+  })
 end
 
 return {
+  Info = info,
   GetWallet = getWallet,
   CreateCustody = createCustody
 }
