@@ -2,6 +2,7 @@ local parse = require('custody.parse')
 local tokenconfig = require('custody.tokenconfig')
 local ledger = require('custody.ledger')
 local transfer = require('custody.transfer')
+local subscription = require('custody.subscription')
 
 local function handleStakeDeposit(msg: Message, creditNotice: CreditNotice)
   local _, stakeDeposit = parse.parseStakeDeposit(msg, creditNotice)
@@ -12,6 +13,12 @@ local function handleStakeDeposit(msg: Message, creditNotice: CreditNotice)
   end
 
   ledger.RecordDeposit(stakeDeposit)
+  subscription.NotifyTopic("stake-deposit", stakeDeposit)
+end
+
+local function handleDistributeReward(creditNotice: CreditNotice)
+  transfer.DistributeCreditNotice(creditNotice)
+  subscription.NotifyTopic("distribute", creditNotice)
 end
 
 local function handleCreditNotice(msg: Message)
@@ -24,7 +31,7 @@ local function handleCreditNotice(msg: Message)
   if tokenconfig.IsStakingEnabled(creditNotice.TokenId) then
     handleStakeDeposit(msg, creditNotice)
   elseif tokenconfig.IsRewardEnabled(creditNotice.TokenId) then
-    transfer.DistributeCreditNotice(creditNotice)
+    handleDistributeReward(creditNotice)
   else
     print("Unknown token id:" .. creditNotice.TokenId)
     print("Refunding " .. tostring(creditNotice.Quantity) .. " of " .. creditNotice.TokenId .. " tokens to " .. creditNotice.Sender)
@@ -33,23 +40,23 @@ local function handleCreditNotice(msg: Message)
 end
 
 local function handleWithdraw(msg: Message): any
-  local _, stakeWithdrawl = parse.parseStakeWithdrawl(msg)
-  if stakeWithdrawl is string then
+  local _, stakeWithdrawal = parse.parseStakeWithdrawal(msg)
+  if stakeWithdrawal is string then
     return msg.reply({
-      Error = "Invalid stake withdrawl request",
+      Error = "Invalid stake withdrawal request",
     })
   end
 
-  local activeStake = ledger.GetActiveStakeById(stakeWithdrawl.Id)
+  local activeStake = ledger.GetActiveStakeById(stakeWithdrawal.Id)
   if activeStake is nil then
     return msg.reply({
-      Error = "No active stake found for withdrawl: " .. stakeWithdrawl.Id,
+      Error = "No active stake found for withdrawal: " .. stakeWithdrawal.Id,
     })
   end
 
-  if activeStake.Sender ~= stakeWithdrawl.Sender then
+  if activeStake.Sender ~= stakeWithdrawal.Sender then
     return msg.reply({
-      Error = "Withdrawl of " .. activeStake.Id .. " stake can only be made by " .. activeStake.Sender,
+      Error = "Withdrawal of " .. activeStake.Id .. " stake can only be made by " .. activeStake.Sender,
     })
   end
 
@@ -59,8 +66,9 @@ local function handleWithdraw(msg: Message): any
     })
   end
 
-  ledger.RecordWithdrawl(stakeWithdrawl)
+  ledger.RecordWithdrawal(stakeWithdrawal)
   transfer.WithdrawFullStakeDeposit(activeStake)
+  subscription.NotifyTopic("stake-withdrawal", stakeWithdrawal)
 
   return msg.reply({
     Status = "Complete",

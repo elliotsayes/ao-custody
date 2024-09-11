@@ -1,11 +1,11 @@
 require("custody.parse")
 
 local depositHistory: { StakeDeposit }
-local withdrawlHistory: { StakeWithdrawl }
+local withdrawalHistory: { StakeWithdrawal }
 local activeStakes: { StakeDeposit }
 
 depositHistory = depositHistory or {}
-withdrawlHistory = withdrawlHistory or {}
+withdrawalHistory = withdrawalHistory or {}
 activeStakes = activeStakes or {}
 
 local function recordDeposit(stakeDeposit: StakeDeposit)
@@ -14,11 +14,11 @@ local function recordDeposit(stakeDeposit: StakeDeposit)
   table.insert(activeStakes, stakeDeposit)
 end
 
-local function recordWithdrawl(stakeWithdrawl: StakeWithdrawl)
+local function recordWithdrawal(stakeWithdrawal: StakeWithdrawal)
   for i, stake in ipairs(activeStakes) do
-    if stake.Id == stakeWithdrawl.Id then
+    if stake.Id == stakeWithdrawal.Id then
       table.remove(activeStakes, i)
-      table.insert(withdrawlHistory, stakeWithdrawl)
+      table.insert(withdrawalHistory, stakeWithdrawal)
       break
     end
   end
@@ -48,7 +48,7 @@ end
 
 return {
   RecordDeposit = recordDeposit,
-  RecordWithdrawl = recordWithdrawl,
+  RecordWithdrawal = recordWithdrawal,
   GetActiveStakes = getActiveStakes,
   GetActiveStakesBySender = getActiveStakesBySender,
   GetActiveStakeById = getActiveStakeById

@@ -108,25 +108,25 @@ local function parseStakeDeposit(msg: Message, creditNotice: CreditNotice): (boo
   return true, stakeDeposit
 end
 
-global record StakeWithdrawl
+global record StakeWithdrawal
   Id: string
   Sender: string
 end
 
-local function parseStakeWithdrawl(msg: Message): boolean, StakeWithdrawl | string
+local function parseStakeWithdrawal(msg: Message): boolean, StakeWithdrawal | string
   local id = msg.Tags['StakeId']
   if not validateArweaveAddress(id) then
     return false, "Invalid StakeId"
   end
-  local stakeWithdrawl: StakeWithdrawl = {
+  local stakeWithdrawal: StakeWithdrawal = {
     Id = id,
     Sender = msg.From,
   }
-  return true, stakeWithdrawl
+  return true, stakeWithdrawal
 end
 
 return {
   parseCreditNotice = parseCreditNotice,
   parseStakeDeposit = parseStakeDeposit,
-  parseStakeWithdrawl = parseStakeWithdrawl
+  parseStakeWithdrawal = parseStakeWithdrawal
 }
