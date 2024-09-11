@@ -14,7 +14,7 @@ global record ao
   assign: function(AssignArgs)
 end
 
-global type MatchedHandler = function(msg: Message): function | nil
+global type MatchedHandler = function(msg: Message): boolean
 
 global record Handlers
   add: function

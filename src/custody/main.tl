@@ -7,9 +7,13 @@ Handlers.add(
   handlers.Info
 )
 
+local function nonSubscriptionCreditNotice(msg: Message): boolean
+  return Handlers.utils.hasMatchingTag("Action", "Credit-Notice")(msg)
+      and not Handlers.utils.hasMatchingTag("X-Action", "Pay-For-Subscription")(msg)
+end
 Handlers.add(
   'Custody.Credit-Notice',
-  Handlers.utils.hasMatchingTag("Action", "Credit-Notice"),
+  nonSubscriptionCreditNotice,
   handlers.CreditNotice
 )
 
