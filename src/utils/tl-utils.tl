@@ -83,6 +83,29 @@ local function includes<T>(value: T, arr: {T}): boolean
   return false
 end
 
+-- Source: http://lua-users.org/wiki/CopyTable
+-- Save copied tables in `copies`, indexed by original table.
+local function deepcopy(orig: table, copies: table): table
+  copies = copies or {}
+  local orig_type = type(orig)
+  local copy: table
+  if orig_type == 'table' then
+      if copies[orig] then
+          copy = copies[orig] as table
+      else
+          copy = {}
+          copies[orig] = copy
+          for orig_key, orig_value in next, orig, nil do
+              copy[deepcopy(orig_key, copies)] = deepcopy(orig_value, copies)
+          end
+          setmetatable(copy, deepcopy(getmetatable(orig) as table, copies) as metatable<table>)
+      end
+  else -- number, string, boolean, etc
+      copy = orig
+  end
+  return copy
+end
+
 return {
   find = find,
   filter = filter,
@@ -92,5 +115,6 @@ return {
   compose = compose,
   values = values,
   keys = keys,
-  includes = includes
+  includes = includes,
+  deepcopy = deepcopy
 }

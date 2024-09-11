@@ -1,3 +1,4 @@
+local json = require('json')
 local parse = require('custody.parse')
 local tokenconfig = require('custody.tokenconfig')
 local ledger = require('custody.ledger')
@@ -77,12 +78,16 @@ local function handleWithdraw(msg: Message): any
 end
 
 local function handleInfo(msg: Message): any
-  local walletId = msg.From
   local activeStakes = ledger.GetActiveStakes()
+  local data = json.encode({
+    StakingTokens = tokenconfig.GetStakingTokens(),
+    RewardTokens = tokenconfig.GetRewardTokens(),
+  })
 
   return msg.reply({
-    WalletId = walletId,
+    Protocol = "Custody",
     ['Stake-Count'] = tostring(#activeStakes),
+    Data = data,
   })
 end
 
