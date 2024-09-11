@@ -60,7 +60,7 @@ global record TSubscribable
     handleSubscribeToTopics: function(msg: Message)
     unsubscribeFromTopics: function(processId: string, topics: {string})
     handleUnsubscribeFromTopics: function(msg: Message)
-    notifySubscribers: function(topic: string, payload: SendMessagePayload)
+    notifySubscribers: function(topic: string, payload: any)
     notifyTopics: function(topicsAndPayloads: {string: any}, timestamp: number)
     notifyTopic: function(topic: string, payload: any, timestamp: number)
     checkNotifyTopics: function(topics: {string}, timestamp: number)
