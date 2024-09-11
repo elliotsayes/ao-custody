@@ -28,7 +28,7 @@ Subscribable.configTopicsAndChecks({
 Subscribable.registerSubscriber(BENEFICIARY_ADDRESS, true)
 Subscribable._storage.subscribeToTopics(
   BENEFICIARY_ADDRESS,
-  {'stake-deposit', 'stake-withdrawal', 'distribute'}
+  {'stake-deposit', 'stake-withdrawal'}
 )
 
 local enum SubscriptionTopic
