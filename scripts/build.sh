@@ -17,8 +17,9 @@ cd build-lua
 
 amalg.lua -s stake/main.lua -o ../build/stake.lua \
     stake.const stake.parse stake.index stake.subprocess stake.handlers \
+
+amalg.lua -s custody/main.lua -o ../build/custody.lua \
     utils.bint utils.tl-utils \
     dummy.dummy
-
 
 # FINAL RESULT is build/main.lua
