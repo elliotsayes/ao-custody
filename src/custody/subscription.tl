@@ -25,7 +25,7 @@ Subscribable.configTopicsAndChecks({
   },
 })
 
-Subscribable.registerSubscriber(INDEX_PROCESS, true)
+Subscribable.registerSubscriber(BENEFICARY_ADDRESS, true)
 
 local enum SubscriptionTopic
   'stake-deposit'
