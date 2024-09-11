@@ -113,11 +113,14 @@ global record StakeWithdrawl
   Sender: string
 end
 
-local function parseStakeWithdrawl(msg: Message): (boolean, StakeWithdrawl | string)
-  local sender = msg.From
+local function parseStakeWithdrawl(msg: Message): boolean, StakeWithdrawl | string
+  local id = msg.Tags['StakeId']
+  if not validateArweaveAddress(id) then
+    return false, "Invalid StakeId"
+  end
   local stakeWithdrawl: StakeWithdrawl = {
-    Id = msg.Id,
-    Sender = sender,
+    Id = id,
+    Sender = msg.From,
   }
   return true, stakeWithdrawl
 end

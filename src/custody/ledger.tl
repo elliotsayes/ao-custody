@@ -24,16 +24,8 @@ local function recordWithdrawl(stakeWithdrawl: StakeWithdrawl)
   end
 end
 
-local function getAllActiveStakes(): { StakeDeposit }
+local function getActiveStakes(): { StakeDeposit }
   return activeStakes
-end
-
-local function getActiveStakeById(stakeId: string): StakeDeposit | nil
-  for _, stake in ipairs(activeStakes) do
-    if stake.Id == stakeId then
-      return stake
-    end
-  end
 end
 
 local function getActiveStakesBySender(sender: string): { StakeDeposit }
@@ -46,10 +38,18 @@ local function getActiveStakesBySender(sender: string): { StakeDeposit }
   return result
 end
 
+local function getActiveStakeById(stakeId: string): StakeDeposit | nil
+  for _, stake in ipairs(activeStakes) do
+    if stake.Id == stakeId then
+      return stake
+    end
+  end
+end
+
 return {
   RecordDeposit = recordDeposit,
-  RecardWithdrawl = recordWithdrawl,
-  GetAllActiveStakes = getAllActiveStakes,
-  GetActiveStakeById = getActiveStakeById,
-  GetActiveStakesBySender = getActiveStakesBySender
+  RecordWithdrawl = recordWithdrawl,
+  GetActiveStakes = getActiveStakes,
+  GetActiveStakesBySender = getActiveStakesBySender,
+  GetActiveStakeById = getActiveStakeById
 }

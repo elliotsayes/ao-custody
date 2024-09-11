@@ -23,7 +23,19 @@ local function distributeCreditNotice(creditNotice: CreditNotice)
   })
 end
 
+local function withdrawFullStakeDeposit(stakeDeposit: StakeDeposit)
+  local quantityStr = tostring(stakeDeposit.Quantity)
+  print("Withdrawing " .. quantityStr .. " of " .. stakeDeposit.TokenId .. " tokens to " .. stakeDeposit.Sender)
+  ao.send({
+    Target = stakeDeposit.TokenId,
+    Action = "Transfer",
+    Quantity = quantityStr,
+    Recipient = stakeDeposit.Sender,
+  })
+end
+
 return {
   RefundCreditNotice = refundCreditNotice,
-  DistributeCreditNotice = distributeCreditNotice
+  DistributeCreditNotice = distributeCreditNotice,
+  WithdrawFullStakeDeposit = withdrawFullStakeDeposit,
 }
