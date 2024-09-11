@@ -1,3 +1,4 @@
+require('custody.const')
 local handlers = require('custody.handlers')
 
 Handlers.add(
@@ -17,3 +18,8 @@ Handlers.add(
   Handlers.utils.hasMatchingTag("Action", "Custody.Withdraw"),
   handlers.Withdraw
 )
+
+ao.send({
+  Target = INDEX_PROCESS,
+  Action = "AckSrc"
+})

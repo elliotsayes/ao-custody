@@ -25,14 +25,14 @@ ao.addAssignable("CUSTODY_SRC_MSG", {
 
 ao.send({
   Target = INDEX_PROCESS,
-  Action = "ConfigureAck"
+  Action = "AckCfg"
 })
 ]]
   })
 
   Handlers.receive({
     From = processId,
-    Action = "ConfigureAck"
+    Action = "AckCfg"
   })
 end
 
@@ -44,7 +44,7 @@ local function loadSource(processId: string)
 
   Handlers.receive({
     From = processId,
-    Action = "SourceAck"
+    Action = "AckSrc"
   })
 end
 
