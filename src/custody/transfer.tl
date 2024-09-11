@@ -14,12 +14,12 @@ end
 
 local function distributeCreditNotice(creditNotice: CreditNotice)
   local quantityStr = tostring(creditNotice.Quantity)
-  print("Distributing " .. quantityStr .. " of " .. creditNotice.TokenId .. " tokens to " .. BENEFICARY_ADDRESS)
+  print("Distributing " .. quantityStr .. " of " .. creditNotice.TokenId .. " tokens to " .. BENEFICIARY_ADDRESS)
   ao.send({
     Target = creditNotice.TokenId,
     Action = "Transfer",
     Quantity = quantityStr,
-    Recipient = BENEFICARY_ADDRESS,
+    Recipient = BENEFICIARY_ADDRESS,
   })
 end
 

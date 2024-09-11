@@ -25,9 +25,9 @@ Subscribable.configTopicsAndChecks({
   },
 })
 
-Subscribable.registerSubscriber(BENEFICARY_ADDRESS, true)
+Subscribable.registerSubscriber(BENEFICIARY_ADDRESS, true)
 Subscribable._storage.subscribeToTopics(
-  BENEFICARY_ADDRESS,
+  BENEFICIARY_ADDRESS,
   {'stake-deposit', 'stake-withdrawal', 'distribute'}
 )
 

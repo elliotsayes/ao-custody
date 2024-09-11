@@ -33,6 +33,11 @@ local function mockedRequire(moduleName)
     return originalRequire("lsqlite3complete")
   end
 
+  -- Subscribable bundled deps
+  if moduleName == "storage-vanilla" or moduleName == "pkg-api" then
+    return originalRequire(moduleName)
+  end
+
   if moduleName == "luassert.namespaces" then
     return originalRequire(moduleName)
   end

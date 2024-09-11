@@ -58,6 +58,10 @@ describe("greetings", function()
     assert.equal("AckSrc", _G.LastMessage["<Index>"].Tags["Action"])
   end)
 
+  it("should register beneficiary", function()
+    assert.equal("Subscriber-Registration-Confirmation", _G.LastMessage["<Beneficiary>"].Tags["Action"])
+  end)
+
   it("should send", function()
     ao.send({
       Target = ao.id,
