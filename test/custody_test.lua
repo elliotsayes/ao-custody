@@ -15,6 +15,7 @@ _G.Owner = '123MyOwner321'
 _G.MainProcessId = '123xyzMySelfabc321'
 _G.AoCredProcessId = 'AoCred-123xyz'
 
+_G.LastMessage = {}
 _G.Processes = {
   [_G.AoCredProcessId] = require 'mocked-env.processes.token' (_G.AoCredProcessId),
   ["<Index>"] = require 'mocked-env.processes.dummy' ("<Index>"),
@@ -54,7 +55,7 @@ describe("greetings", function()
   end)
 
   it("should send AckSrc", function()
-    assert.equal("AckSrc", _G.LastMessage.Tags["Action"])
+    assert.equal("AckSrc", _G.LastMessage["<Index>"].Tags["Action"])
   end)
 
   it("should send", function()
@@ -65,6 +66,6 @@ describe("greetings", function()
         Action = "Info"
       }
     })
-    assert.equal("0", _G.LastMessage.Tags["Stake-Count"])
+    assert.equal("0", _G.LastMessage["<Dummy>"].Tags["Stake-Count"])
   end)
 end)

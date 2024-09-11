@@ -15,6 +15,7 @@ _G.Owner = '123MyOwner321'
 _G.MainProcessId = '123xyzMySelfabc321'
 _G.AoCredProcessId = 'AoCred-123xyz'
 
+_G.LastMessage = {}
 _G.Processes = {
   [_G.AoCredProcessId] = require 'mocked-env.processes.token' (_G.AoCredProcessId),
   ["<Dummy>"] = require 'mocked-env.processes.dummy' ("<Dummy>")
@@ -58,6 +59,6 @@ describe("greetings", function()
         Action = "Custody-Index.Get-Wallet"
       }
     })
-    assert.equal("Not Found", _G.LastMessage.Tags["Status"])
+    assert.equal("Not Found", _G.LastMessage["<Dummy>"].Tags["Status"])
   end)
 end)

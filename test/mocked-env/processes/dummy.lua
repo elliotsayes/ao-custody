@@ -8,7 +8,7 @@ local function newmodule(selfId)
       print("  " .. k .. " = " .. v)
     end
 
-    _G.LastMessage = msg
+    _G.LastMessage[selfId] = msg
   end
 
   return dummy
