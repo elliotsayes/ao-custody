@@ -58,10 +58,10 @@ SELECT ProcessId FROM Wallet WHERE WalletId = ?;
   if stmt:step() == sqlite.ROW then
     local value = stmt:get_value(0)
     stmt:finalize()
-    if type(value) == "string" then
+    if value is string then
       return {
         WalletId = walletId,
-        ProcessId = value as string
+        ProcessId = value
       }
     end
     return {
