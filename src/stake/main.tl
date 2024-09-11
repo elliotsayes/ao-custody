@@ -13,3 +13,9 @@ Handlers.add(
   Handlers.utils.hasMatchingTag("Action", "Custody-Index.Get-Wallet"),
   handlers.GetWallet
 )
+
+Handlers.add(
+  'Custody-Index.Create-Custody',
+  Handlers.utils.hasMatchingTag("Action", "Custody-Index.Create-Custody"),
+  handlers.CreateCustody
+)
