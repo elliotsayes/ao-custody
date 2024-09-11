@@ -1,6 +1,6 @@
 global record ao
   id: string
-  send: function(message: {string: string})
+  send: function(message: {string: string}): Message
   record env
     record Module
       Id: string
@@ -34,6 +34,7 @@ global record Message
   Data: string
   Owner: string
   reply: function({string: string}): nil
+  receive: function(): Message
 end
 
 global record TokenNotice

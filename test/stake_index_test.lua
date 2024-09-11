@@ -32,12 +32,12 @@ describe("stake.index", function()
   end)
 
   it("should add a wallet", function()
-    local res = stake_index.InsertWallet("0x1234", 100)
+    local res = stake_index.InsertWallet("0x1234")
     assert.equal(0, res, "Failed to insert wallet")
   end)
 
   it("should fail to insert the duplicate wallet", function()
-    local res = stake_index.InsertWallet("0x1234", 100)
+    local res = stake_index.InsertWallet("0x1234")
     assert.Not.equal(0, res)
   end)
 
@@ -54,7 +54,7 @@ describe("stake.index", function()
   end)
 
   it("should set process for wallet", function()
-    local res = stake_index.SetWalletProcess("0x1234", 100, "0x5678")
+    local res = stake_index.SetWalletProcess("0x1234", "0x5678")
     assert.equal(0, res)
   end)
 

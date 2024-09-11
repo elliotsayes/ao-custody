@@ -1,12 +1,12 @@
-local json = require "json"
-
 local function newmodule(selfId)
   local dummy = {}
 
   function dummy.handle(msg)
-    print(selfId .. ": " .. msg.From .. " says " .. (msg.Data or "<nil>"))
+    print(msg.From .. " => " .. selfId)
     -- Print out tags table
-    print(json.encode(msg.Tags))
+    for k, v in pairs(msg.Tags) do
+      print("  " .. k .. " = " .. v)
+    end
 
     _G.LastMessage = msg
   end

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Wallet(
 ]]
 end
 
-local function insertWallet(walletId: string, timestamp: number): number
+local function insertWallet(walletId: string): number
   local stmt = DB:prepare[[
 INSERT INTO Wallet(WalletId, TimestampCreated, TimestampModified)
 VALUES(?, ?, ?);
@@ -20,6 +20,8 @@ VALUES(?, ?, ?);
   if stmt == nil then
     error("Failed to prepare statement")
   end
+
+  local timestamp = os.time()
   stmt:bind_values(walletId, timestamp, timestamp)
   local result = stmt:step()
   if result ~= sqlite.DONE then
@@ -28,7 +30,7 @@ VALUES(?, ?, ?);
   return stmt:finalize()
 end
 
-local function setWalletProcess(walletId: string, timestamp: number, processId: string): number
+local function setWalletProcess(walletId: string, processId: string): number
   local stmt = DB:prepare[[
 UPDATE Wallet SET TimestampModified = ?, ProcessId = ?
 WHERE WalletId = ?;
@@ -36,6 +38,8 @@ WHERE WalletId = ?;
   if stmt == nil then
     error("Failed to prepare statement")
   end
+  
+  local timestamp = os.time()
   stmt:bind_values(timestamp, processId, walletId)
   stmt:step()
   return stmt:finalize()
