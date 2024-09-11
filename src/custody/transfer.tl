@@ -1,7 +1,7 @@
 require("custody.const")
 require("custody.parse")
 
-local function refundTokens(creditNotice: CreditNotice): any
+local function refundCreditNotice(creditNotice: CreditNotice)
   local quantityStr = tostring(creditNotice.Quantity)
   print("Refunding " .. quantityStr .. " of " .. creditNotice.TokenId .. " tokens to " .. creditNotice.Sender)
   ao.send({
@@ -12,7 +12,7 @@ local function refundTokens(creditNotice: CreditNotice): any
   })
 end
 
-local function distributeCreditNotice(creditNotice: CreditNotice): any
+local function distributeCreditNotice(creditNotice: CreditNotice)
   local quantityStr = tostring(creditNotice.Quantity)
   print("Distributing " .. quantityStr .. " of " .. creditNotice.TokenId .. " tokens to " .. BENEFICARY_ADDRESS)
   ao.send({
@@ -24,5 +24,6 @@ local function distributeCreditNotice(creditNotice: CreditNotice): any
 end
 
 return {
-  RefundTokens = refundTokens
+  RefundCreditNotice = refundCreditNotice,
+  DistributeCreditNotice = distributeCreditNotice
 }

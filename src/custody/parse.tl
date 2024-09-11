@@ -40,6 +40,7 @@ local function parseStakeDuration(config: StakingTokenConfig, duration: string |
 end
 
 global record CreditNotice
+  Id: string
   TokenId: string
   Sender: string
   Quantity: BigInteger
@@ -59,6 +60,7 @@ local function parseCreditNotice(msg: Message): (boolean, CreditNotice | string)
   end
 
   local creditNotice: CreditNotice = {
+    Id = msg.Id,
     TokenId = tokenId,
     Sender = sender,
     Quantity = quantity,
@@ -66,7 +68,8 @@ local function parseCreditNotice(msg: Message): (boolean, CreditNotice | string)
   return true, creditNotice
 end
 
-global record Stake
+global record StakeDeposit
+  Id: string
   TokenId: string
   Sender: string
   Quantity: BigInteger
@@ -75,7 +78,7 @@ global record Stake
   WithdrawTimeMs: number
 end
 
-local function parseStake(msg: Message, creditNotice: CreditNotice): (boolean, Stake | string)
+local function parseStakeDeposit(msg: Message, creditNotice: CreditNotice): (boolean, StakeDeposit | string)
   local tokenConfig = tokens.GetStakingTokenConfig(creditNotice.TokenId)
   if tokenConfig == nil then
     return false, "Could not find token config for " .. creditNotice.TokenId
@@ -93,7 +96,8 @@ local function parseStake(msg: Message, creditNotice: CreditNotice): (boolean, S
 
   local stakeTimeMs = msg.Timestamp
   local withdrawTimeMs = stakeTimeMs + stakeDurationMs
-  local stake: Stake = {
+  local stakeDeposit: StakeDeposit = {
+    Id = creditNotice.Id,
     TokenId = creditNotice.TokenId,
     Sender = creditNotice.Sender,
     Quantity = creditNotice.Quantity,
@@ -101,10 +105,25 @@ local function parseStake(msg: Message, creditNotice: CreditNotice): (boolean, S
     StakeDurationMs = stakeDurationMs,
     WithdrawTimeMs = withdrawTimeMs,
   }
-  return true, stake
+  return true, stakeDeposit
+end
+
+global record StakeWithdrawl
+  Id: string
+  Sender: string
+end
+
+local function parseStakeWithdrawl(msg: Message): (boolean, StakeWithdrawl | string)
+  local sender = msg.From
+  local stakeWithdrawl: StakeWithdrawl = {
+    Id = msg.Id,
+    Sender = sender,
+  }
+  return true, stakeWithdrawl
 end
 
 return {
   parseCreditNotice = parseCreditNotice,
-  ParseStake = parseStake,
+  parseStakeDeposit = parseStakeDeposit,
+  parseStakeWithdrawl = parseStakeWithdrawl
 }
