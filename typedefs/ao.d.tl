@@ -32,6 +32,7 @@ global record Message
   Id: string
   From: string
   Target: string
+  Timestamp: number
   Tags: { string: string }
   Data: string
   Owner: string
