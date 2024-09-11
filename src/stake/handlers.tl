@@ -1,6 +1,6 @@
-require('stake.const')
-local index = require('stake.index')
 local parse = require('stake.parse')
+local index = require('stake.index')
+local subprocess = require('stake.subprocess')
 
 local function getWallet(msg: Message): any
   local otherWalletId = msg.Tags['Wallet-Id']
@@ -35,20 +35,22 @@ local function getWallet(msg: Message): any
 end
 
 local function createCustody(msg: Message): any
-  local existingEntry = index.GetWalletProcess(msg.From)
+  local walletId = msg.From
+
+  local existingEntry = index.GetWalletProcess(walletId)
   if existingEntry.WalletId ~= nil then
     return msg.reply({
       Error = "Already Created",
     })
   end
 
-  index.InsertWallet(msg.From)
+  index.InsertWallet(walletId)
 
-  local req = ao.spawn(ao.env.Module.Id, {
-    Authority = CUSTODY_AUTHORITY,
-  })
+  local processId = subprocess.SpawnProcess(walletId)
+  subprocess.ConfigureProcess(processId, walletId)
+  subprocess.LoadSource(processId)
 
-  -- TODO: complete
+  index.SetWalletProcess(walletId, processId)
 end
 
 return {

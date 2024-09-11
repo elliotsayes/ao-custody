@@ -11,6 +11,7 @@ global record ao
     end
   end
   spawn: function(module: string, tags: {string: string}): Message
+  assign: function(AssignArgs)
 end
 
 global type MatchedHandler = function(msg: Message): function | nil
@@ -35,6 +36,11 @@ global record Message
   Owner: string
   reply: function({string: string}): nil
   receive: function(): Message
+end
+
+local record AssignArgs
+  Processes: {string}
+  Message: string
 end
 
 global record TokenNotice
