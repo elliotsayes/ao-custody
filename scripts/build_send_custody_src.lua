@@ -7,7 +7,7 @@ srcFile:close()
 
 local evalSrc = [==[
 Send({
-  Target = 'fcoN_xJeisVsPXA-trzVAuIiqO3ydLQxM-L4XbrQKzY',
+  Target = ao.id,
   Tags = {
     Action = 'Eval',
   },
