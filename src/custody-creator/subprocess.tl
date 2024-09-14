@@ -16,7 +16,7 @@ local function configureProcess(processId: string, walletId: string)
     Target = processId,
     Action = "Eval",
     Data = [[
-INDEX_PROCESS = "]] .. ao.id .. [["
+CREATOR_PROCESS = "]] .. ao.id .. [["
 BENEFICIARY_ADDRESS = "]] .. walletId .. [["
 
 ao.addAssignable("CUSTODY_SRC_MSG", {
@@ -24,7 +24,7 @@ ao.addAssignable("CUSTODY_SRC_MSG", {
 })
 
 ao.send({
-  Target = INDEX_PROCESS,
+  Target = CREATOR_PROCESS,
   Action = "AckCfg"
 })
 ]]

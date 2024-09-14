@@ -37,7 +37,7 @@ _G.ao.env = {
   }
 }
 
-_G.INDEX_PROCESS = "<Index>"
+_G.CREATOR_PROCESS = "<Index>"
 _G.BENEFICIARY_ADDRESS = "<Beneficiary>"
 local custody = require "custody.main" -- require so that process handlers are loaded
 

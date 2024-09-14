@@ -1,3 +1,3 @@
 -- Set by the index
-global INDEX_PROCESS: string
+global CREATOR_PROCESS: string
 global BENEFICIARY_ADDRESS: string

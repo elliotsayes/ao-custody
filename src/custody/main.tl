@@ -24,6 +24,6 @@ Handlers.add(
 )
 
 ao.send({
-  Target = INDEX_PROCESS,
+  Target = CREATOR_PROCESS,
   Action = "AckSrc"
 })
