@@ -8,7 +8,7 @@
     "test": "npm run build && bash ./scripts/test.sh",
     "deploy": "WALLET_JSON=\"$(cat ./.secret/wallet.json)\" aoform apply",
     "apm-subscribable": "npx apm-tool download @autonomousfinance/subscribable && cp apm_modules/@autonomousfinance/subscribable/main.lua ./packages/subscribable/subscribable.lua",
-    "generate-wallet": "npx -yes @permaweb/wallet > ./.secret/wallet.json"
+    "generate-wallet": "mkdir -p .secret && npx -yes @permaweb/wallet > ./.secret/wallet.json"
   },
   "keywords": [],
   "author": "",

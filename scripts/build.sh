@@ -22,4 +22,7 @@ amalg.lua -s custody/main.lua -o ../build/custody.lua \
     utils.bint utils.tl-utils \
     dummy.dummy
 
+cd ../build
+lua ../scripts/build_send_custody_src.lua
+
 # FINAL RESULT is build/main.lua
