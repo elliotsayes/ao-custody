@@ -11,9 +11,9 @@ _G.printVerb = function(level)
   end
 end
 
-local stake_index = require "stake.index"
+local custody_creator_index = require "custody-creator.index"
 
-describe("stake.index", function()
+describe("custody-creator.index", function()
   setup(function()
   end)
 
@@ -21,72 +21,72 @@ describe("stake.index", function()
   end)
 
   it("should initialize the DB", function()
-    local res = stake_index.InitializeDb()
+    local res = custody_creator_index.InitializeDb()
     assert.equal(0, res)
   end)
 
   it("should be empty", function()
-    local res = stake_index.GetWalletStats()
+    local res = custody_creator_index.GetWalletStats()
     assert.equal(0, res.Total)
     assert.equal(0, res.Active)
     assert.equal(0, res.Pending)
   end)
 
   it("should not get nonexistant wallet", function()
-    local res = stake_index.GetWalletProcess("0x1234")
+    local res = custody_creator_index.GetWalletProcess("0x1234")
     assert.is_nil(res.WalletId)
     assert.is_nil(res.ProcessId)
   end)
 
   it("should add a wallet", function()
-    local res = stake_index.InsertWallet("0x1234")
+    local res = custody_creator_index.InsertWallet("0x1234")
     assert.equal(0, res, "Failed to insert wallet")
   end)
 
   it("should have one pending", function()
-    local res = stake_index.GetWalletStats()
+    local res = custody_creator_index.GetWalletStats()
     assert.equal(1, res.Total)
     assert.equal(0, res.Active)
     assert.equal(1, res.Pending)
   end)
 
   it("should fail to insert the duplicate wallet", function()
-    local res = stake_index.InsertWallet("0x1234")
+    local res = custody_creator_index.InsertWallet("0x1234")
     assert.Not.equal(0, res)
   end)
 
   it("should only get wallet for unset process", function()
-    local res = stake_index.GetWalletProcess("0x1234")
+    local res = custody_creator_index.GetWalletProcess("0x1234")
     assert.equal("0x1234", res.WalletId)
     assert.is_nil(res.ProcessId)
   end)
 
   it("should not get the wallet's process", function()
-    local res = stake_index.GetWalletProcess("0x5678")
+    local res = custody_creator_index.GetWalletProcess("0x5678")
     assert.is_nil(res.WalletId)
     assert.is_nil(res.ProcessId)
   end)
 
   it("should set process for wallet", function()
-    local res = stake_index.SetWalletProcess("0x1234", "0x5678")
+    local res = custody_creator_index.SetWalletProcess("0x1234", "0x5678")
     assert.equal(0, res)
   end)
 
   it("should have one active", function()
-    local res = stake_index.GetWalletStats()
+    local res = custody_creator_index.GetWalletStats()
     assert.equal(1, res.Total)
     assert.equal(1, res.Active)
     assert.equal(0, res.Pending)
   end)
 
   it("should now get the wallet's process", function()
-    local res = stake_index.GetWalletProcess("0x1234")
+    local res = custody_creator_index.GetWalletProcess("0x1234")
     assert.equal("0x1234", res.WalletId)
     assert.equal("0x5678", res.ProcessId)
   end)
 
   it("should now get the process's wallet", function()
-    local res = stake_index.GetProcessWallet("0x5678")
+    local res = custody_creator_index.GetProcessWallet("0x5678")
     assert.equal("0x1234", res.WalletId)
     assert.equal("0x5678", res.ProcessId)
   end)

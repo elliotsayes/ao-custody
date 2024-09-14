@@ -1,9 +1,9 @@
-- name: stake
-  file: build/stake.lua
+- name: custody-creator
+  file: build/custody-creator.lua
   scheduler: _GQ33BkPtZrqxA84vM8Zk-N2aO0toNNu_C-l-rawrBA
   module: C4bxMlK8d_wQ-QpXIIZLU8UWXu6Sd8PDJw7HN3nNE2I
   tags:
     - name: Name
-      value: Stake-War-Index
+      value: Custody-Creator
     - name: Authority
       value: fcoN_xJeisVsPXA-trzVAuIiqO3ydLQxM-L4XbrQKzY

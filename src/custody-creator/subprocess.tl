@@ -1,4 +1,4 @@
-require('stake.const')
+require('custody-creator.const')
 
 -- Returns the process ID of the spawned process
 local function spawnProcess(walletId: string): string

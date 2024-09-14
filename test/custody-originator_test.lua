@@ -35,7 +35,7 @@ _G.ao.env = {
   }
 }
 
-local stake = require "stake.main" -- require so that process handlers are loaded
+local custody_creator = require "custody-creator.main" -- require so that process handlers are loaded
 
 
 local resetGlobals = function()
@@ -56,7 +56,7 @@ describe("greetings", function()
       Target = ao.id,
       From = "<Dummy>",
       Tags = {
-        Action = "Custody-Index.Get-Wallet"
+        Action = "Custody-Creator.Get-Wallet",
       }
     })
     assert.equal("Not Found", _G.LastMessage["<Dummy>"].Tags["Status"])

@@ -15,8 +15,8 @@ cyan build -u
 
 cd build-lua
 
-amalg.lua -s stake/main.lua -o ../build/stake.lua \
-    stake.const stake.parse stake.index stake.subprocess stake.handlers \
+amalg.lua -s custody-creator/main.lua -o ../build/custody-creator.lua \
+    custody-creator.const custody-creator.parse custody-creator.index custody-creator.subprocess custody-creator.handlers \
 
 amalg.lua -s custody/main.lua -o ../build/custody.lua \
     utils.bint utils.tl-utils \

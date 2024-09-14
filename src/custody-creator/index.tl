@@ -1,8 +1,9 @@
 local sqlite = require("lsqlite3")
-local DB = sqlite.open_memory()
+global IndexDb: DB
+IndexDb = IndexDb or sqlite.open_memory()
 
 local function initializeDb(): number
-  return DB:exec[[
+  return IndexDb:exec[[
 CREATE TABLE IF NOT EXISTS Wallet(
   WalletId TEXT PRIMARY KEY NOT NULL,
   TimestampCreated INTEGER NOT NULL,
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Wallet(
 end
 
 local function insertWallet(walletId: string): number
-  local stmt = DB:prepare[[
+  local stmt = IndexDb:prepare[[
 INSERT INTO Wallet(WalletId, TimestampCreated, TimestampModified)
 VALUES(?, ?, ?);
 ]]
@@ -31,7 +32,7 @@ VALUES(?, ?, ?);
 end
 
 local function setWalletProcess(walletId: string, processId: string): number
-  local stmt = DB:prepare[[
+  local stmt = IndexDb:prepare[[
 UPDATE Wallet SET TimestampModified = ?, ProcessId = ?
 WHERE WalletId = ?;
 ]]
@@ -51,7 +52,7 @@ local record WalletEntry
 end
 
 local function getWalletProcess(walletId: string): WalletEntry
-  local stmt = DB:prepare[[
+  local stmt = IndexDb:prepare[[
 SELECT ProcessId FROM Wallet WHERE WalletId = ?;
 ]]
   stmt:bind_values(walletId)
@@ -77,7 +78,7 @@ SELECT ProcessId FROM Wallet WHERE WalletId = ?;
 end
 
 local function getProcessWallet(processId: string): WalletEntry
-  local stmt = DB:prepare[[
+  local stmt = IndexDb:prepare[[
 SELECT WalletId FROM Wallet WHERE ProcessId = ?;
 ]]
   stmt:bind_values(processId)
@@ -104,14 +105,14 @@ end
 
 local function getWalletStats(): WalletStats
   -- Query both rows, and rows with process Id set
-  local stmt = DB:prepare[[
+  local stmt = IndexDb:prepare[[
 SELECT COUNT(*) FROM Wallet;
 ]]
   stmt:step()
   local total = stmt:get_value(0) as number
   stmt:finalize()
 
-  stmt = DB:prepare[[
+  stmt = IndexDb:prepare[[
 SELECT COUNT(*) FROM Wallet WHERE ProcessId IS NOT NULL;
 ]]
   stmt:step()

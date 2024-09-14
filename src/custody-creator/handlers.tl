@@ -1,6 +1,6 @@
-local parse = require('stake.parse')
-local index = require('stake.index')
-local subprocess = require('stake.subprocess')
+local parse = require('custody-creator.parse')
+local index = require('custody-creator.index')
+local subprocess = require('custody-creator.subprocess')
 
 local function getWallet(msg: Message): any
   local otherWalletId = msg.Tags['Wallet-Id']
@@ -63,7 +63,7 @@ local function info(msg: Message): any
   local stats = index.GetWalletStats()
 
   msg.reply({
-    Protocol = "Custody-Index",
+    Protocol = "custody-creator",
     Total = tostring(stats.Total),
     Active = tostring(stats.Active),
     Pending = tostring(stats.Pending),
