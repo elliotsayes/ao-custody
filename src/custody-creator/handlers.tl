@@ -63,7 +63,7 @@ local function info(msg: Message): any
   local stats = index.GetWalletStats()
 
   msg.reply({
-    Protocol = "custody-creator",
+    Protocol = "Custody-Creator",
     Total = tostring(stats.Total),
     Active = tostring(stats.Active),
     Pending = tostring(stats.Pending),
