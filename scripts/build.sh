@@ -20,7 +20,8 @@ amalg.lua -s custody-creator/main.lua -o ../build/custody-creator.lua \
 
 amalg.lua -s custody/main.lua -o ../build/custody.lua \
     utils.bint utils.tl-utils \
-    dummy.dummy
+    subscribable.subscribable \
+    custody.const custody.handlers custody.ledger custody.parse custody.subscription custody.tokenconfig custody.transfer
 
 cd ../build
 lua ../scripts/build_send_custody_src.lua
