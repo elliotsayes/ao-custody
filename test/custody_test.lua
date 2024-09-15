@@ -54,9 +54,10 @@ describe("greetings", function()
     -- to execute after this describe
   end)
 
-  it("should send AckSrc", function()
-    assert.equal("AckSrc", _G.LastMessage["<Index>"].Tags["Action"])
-  end)
+  -- This is now part of the script, not source code
+  -- it("should send AckSrc", function()
+  --   assert.equal("AckSrc", _G.LastMessage["<Index>"].Tags["Action"])
+  -- end)
 
   it("should register beneficiary", function()
     assert.equal("Subscriber-Registration-Confirmation", _G.LastMessage["<Beneficiary>"].Tags["Action"])
