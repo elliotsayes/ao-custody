@@ -1,5 +1,8 @@
 local function validateArweaveAddress(address: string): boolean
-  return string.match(address, "^[%w_-]{43}$") ~= nil
+  if not address or type(address) ~= 'string' then
+		return false
+	end
+	return string.match(address, "^[%w%-_]+$") ~= nil and #address == 43
 end
 
 return {

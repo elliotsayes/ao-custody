@@ -2,7 +2,10 @@ local tokens = require("custody.tokenconfig")
 local bint = require("utils.bint")()
 
 local function validateArweaveAddress(address: string | nil): boolean
-  return string.match(address, "^[%w_-]{43}$") ~= nil
+  if not address or type(address) ~= 'string' then
+		return false
+	end
+	return string.match(address, "^[%w%-_]+$") ~= nil and #address == 43
 end
 
 local function withinBoundsInclusive(value: number, bounds: Bounds): boolean
@@ -126,6 +129,7 @@ local function parseStakeWithdrawal(msg: Message): boolean, StakeWithdrawal | st
 end
 
 return {
+  validateArweaveAddress = validateArweaveAddress,
   parseCreditNotice = parseCreditNotice,
   parseStakeDeposit = parseStakeDeposit,
   parseStakeWithdrawal = parseStakeWithdrawal
