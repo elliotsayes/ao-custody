@@ -1,4 +1,4 @@
-local srcFile = io.open("custody.lua", "r")
+local srcFile = io.open("custody_src.lua", "r")
 if not srcFile then
   error("Could not open file")
 end
@@ -23,7 +23,7 @@ ao.send({
 })
 ]==]
 
-local writeFile = io.open("./send_custody_src_msg.lua", "w")
+local writeFile = io.open("./send_custody_src.lua", "w")
 if not writeFile then
   error("Could not open file")
 end
