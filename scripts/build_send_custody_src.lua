@@ -6,7 +6,7 @@ local src = srcFile:read "*a"
 srcFile:close()
 
 local evalSrc = [==[
-Send({
+ao.send({
   Target = ao.id,
   Tags = {
     Action = 'EvalOnce',
