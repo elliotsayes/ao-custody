@@ -9,7 +9,7 @@ local evalSrc = [==[
 Send({
   Target = ao.id,
   Tags = {
-    Action = 'Eval',
+    Action = 'EvalOnce',
   },
   Data = [=[
 ]==] .. src .. [==[

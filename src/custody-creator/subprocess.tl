@@ -23,6 +23,19 @@ ao.addAssignable("CUSTODY_SRC_MSG", {
   Id = "]] .. CUSTODY_SRC_MSG .. [["
 })
 
+local eval = require('.eval')(ao)
+EvalOnceHistory = EvalOnceHistory or {}
+Handlers.add(
+  'EvalOnce',
+  Handlers.utils.hasMatchingTag('Action', 'EvalOnce'),
+  function(msg: Message)
+    if msg.From == Owner and not EvalOnceHistory[msg.Id] then
+      EvalOnceHistory[msg.Id] = true
+      eval(msg)
+    end
+  end
+)
+
 ao.send({
   Target = CREATOR_PROCESS,
   Action = "AckCfg"
