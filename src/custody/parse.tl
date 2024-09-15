@@ -1,7 +1,7 @@
 local tokens = require("custody.tokenconfig")
 local bint = require("utils.bint")()
 
-local function validateArweaveAddress(address: string | nil): boolean
+local function validateArweaveId(address: string | nil): boolean
   if not address or type(address) ~= 'string' then
 		return false
 	end
@@ -53,7 +53,7 @@ local function parseCreditNotice(msg: Message): (boolean, CreditNotice | string)
   local tokenId = msg.From
 
   local sender = msg.Tags.Sender
-  if not validateArweaveAddress(sender) then
+  if not validateArweaveId(sender) then
     return false, "Invalid sender address for staking"
   end
 
@@ -117,19 +117,19 @@ global record StakeWithdrawal
 end
 
 local function parseStakeWithdrawal(msg: Message): boolean, StakeWithdrawal | string
-  local id = msg.Tags['Stake-Id']
-  if not validateArweaveAddress(id) then
+  local stakeId = msg.Tags['Stake-Id']
+  if not validateArweaveId(stakeId) then
     return false, "Invalid Stake-Id"
   end
   local stakeWithdrawal: StakeWithdrawal = {
-    Id = id,
+    Id = stakeId,
     Sender = msg.From,
   }
   return true, stakeWithdrawal
 end
 
 return {
-  validateArweaveAddress = validateArweaveAddress,
+  validateArweaveId = validateArweaveId,
   parseCreditNotice = parseCreditNotice,
   parseStakeDeposit = parseStakeDeposit,
   parseStakeWithdrawal = parseStakeWithdrawal

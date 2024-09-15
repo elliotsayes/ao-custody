@@ -1,4 +1,4 @@
-local function validateArweaveAddress(address: string): boolean
+local function validateArweaveId(address: string): boolean
   if not address or type(address) ~= 'string' then
 		return false
 	end
@@ -6,5 +6,5 @@ local function validateArweaveAddress(address: string): boolean
 end
 
 return {
-  ValidateArweaveAddress = validateArweaveAddress
+  ValidateArweaveId = validateArweaveId
 }

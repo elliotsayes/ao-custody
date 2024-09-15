@@ -4,7 +4,7 @@ local subprocess = require('custody-creator.subprocess')
 
 local function getWallet(msg: Message): any
   local otherWalletId = msg.Tags['Wallet-Id']
-  if otherWalletId ~= nil and parse.ValidateArweaveAddress(otherWalletId) == false then
+  if otherWalletId ~= nil and parse.ValidateArweaveId(otherWalletId) == false then
     return msg.reply({
       Error = "Invalid Wallet Id",
     })
