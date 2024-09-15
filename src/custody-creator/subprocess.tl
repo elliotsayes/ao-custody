@@ -28,7 +28,7 @@ EvalOnceHistory = EvalOnceHistory or {}
 Handlers.add(
   'EvalOnce',
   Handlers.utils.hasMatchingTag('Action', 'EvalOnce'),
-  function(msg: Message)
+  function(msg)
     if msg.From == Owner and not EvalOnceHistory[msg.Id] then
       EvalOnceHistory[msg.Id] = true
       eval(msg)
