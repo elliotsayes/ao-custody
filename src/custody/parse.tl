@@ -76,7 +76,7 @@ global record StakeDeposit
   TokenId: string
   Sender: string
   Quantity: BigInteger
-  StakeTimeMs: number
+  DepositTimeMs: number
   StakeDurationMs: number
   WithdrawTimeMs: number
 end
@@ -97,14 +97,14 @@ local function parseStakeDeposit(msg: Message, creditNotice: CreditNotice): (boo
     return false, "Invalid duration for staking from " .. creditNotice.Sender
   end
 
-  local stakeTimeMs = msg.Timestamp
-  local withdrawTimeMs = stakeTimeMs + stakeDurationMs
+  local depositTimeMs = msg.Timestamp
+  local withdrawTimeMs = depositTimeMs + stakeDurationMs
   local stakeDeposit: StakeDeposit = {
     Id = creditNotice.Id,
     TokenId = creditNotice.TokenId,
     Sender = creditNotice.Sender,
     Quantity = creditNotice.Quantity,
-    StakeTimeMs = stakeTimeMs,
+    DepositTimeMs = depositTimeMs,
     StakeDurationMs = stakeDurationMs,
     WithdrawTimeMs = withdrawTimeMs,
   }
