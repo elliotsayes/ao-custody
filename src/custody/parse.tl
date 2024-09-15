@@ -12,21 +12,22 @@ local function withinBoundsInclusive(value: number, bounds: Bounds): boolean
   return value >= bounds.Min and value <= bounds.Max
 end
 
-local function withinBoundsInclusiveBint(value: BigInteger, bounds: BoundsBint): boolean
-  return value:ge(bounds.Min) and value:le(bounds.Max)
+local function withinBoundsInclusiveStr(value: string, bounds: BoundsStr): boolean
+  local valueBint = bint.fromstring(value)
+  return valueBint:ge(bint.fromstring(bounds.Min)) and valueBint:le(bint.fromstring(bounds.Max))
 end
 
-local function parseCreditNoticeQuantity(quantity: string | nil): BigInteger
+local function validateCreditNoticeQuantity(quantity: string | nil): boolean
   local quantityNum = bint.fromstring(quantity)
   if quantityNum == nil or not quantityNum:gt(bint.zero()) then
-    return nil
+    return false
   end
-  return quantityNum
+  return true
 end
 
-local function validateStakeQuantity(config: StakingTokenConfig, quantityBint: BigInteger): boolean
+local function validateStakeQuantity(config: StakingTokenConfig, quantityStr: string): boolean
   local bounds = config.QuantityBounds
-  return withinBoundsInclusiveBint(quantityBint, bounds)
+  return withinBoundsInclusiveStr(quantityStr, bounds)
 end
 
 local function parseStakeDuration(config: StakingTokenConfig, duration: string | nil): number
@@ -46,7 +47,7 @@ global record CreditNotice
   Id: string
   TokenId: string
   Sender: string
-  Quantity: BigInteger
+  Quantity: string
 end
 
 local function parseCreditNotice(msg: Message): (boolean, CreditNotice | string)
@@ -57,8 +58,8 @@ local function parseCreditNotice(msg: Message): (boolean, CreditNotice | string)
     return false, "Invalid sender address for staking"
   end
 
-  local quantity = parseCreditNoticeQuantity(msg.Tags.Quantity)
-  if quantity == nil then
+  local quantity = msg.Tags.Quantity
+  if not validateCreditNoticeQuantity(msg.Tags.Quantity) then
     return false, "Invalid quantity for staking from " .. sender
   end
 
@@ -75,7 +76,7 @@ global record StakeDeposit
   Id: string
   TokenId: string
   Sender: string
-  Quantity: BigInteger
+  Quantity: string
   DepositTimeMs: number
   StakeDurationMs: number
   WithdrawTimeMs: number
@@ -86,9 +87,9 @@ local function parseStakeDeposit(msg: Message, creditNotice: CreditNotice): (boo
   if tokenConfig == nil then
     return false, "Could not find token config for " .. creditNotice.TokenId
   end
-
-  local validQuantity = validateStakeQuantity(tokenConfig, creditNotice.Quantity)
-  if not validQuantity then
+  
+  local isValidQuantity = validateStakeQuantity(tokenConfig, creditNotice.Quantity)
+  if not isValidQuantity then
     return false, "Invalid quantity for staking from " .. creditNotice.Sender
   end
 

@@ -6,14 +6,14 @@ global record Bounds
   Max: number
 end
 
-global record BoundsBint
-  Min: BigInteger
-  Max: BigInteger
+global record BoundsStr
+  Min: string
+  Max: string
 end
 
 global record StakingTokenConfig
   Enabled: boolean
-  QuantityBounds: BoundsBint
+  QuantityBounds: BoundsStr
   DurationBounds: Bounds
 end
 
@@ -24,8 +24,8 @@ local stakingTokens: StakingTokens = {
   ["xU9zFkq3X2ZQ6olwNVvr1vUWIjc3kXTWr7xKQD6dh10"] = {
     Enabled = true,
     QuantityBounds = {
-      Min = bint(10):ipow(bint(9)), -- 0.001 wAR
-      Max = bint(10):ipow(bint(15)), -- 1000 wAR
+      Min = tostring(bint(10):ipow(bint(9))), -- 0.001 wAR
+      Max = tostring(bint(10):ipow(bint(15))), -- 1000 wAR
     },
     DurationBounds = {
       Min = 1 * 24 * 60 * 60 * 1000, -- 1 day
@@ -60,32 +60,8 @@ local function isRewardEnabled(tokenId: string): boolean
   return rewardTokens[tokenId] ~= nil and rewardTokens[tokenId].Enabled
 end
 
-global record BoundsStr
-  Min: string
-  Max: string
-end
-
-global record StakingTokenConfigExport
-  Enabled: boolean
-  QuantityBounds: BoundsStr
-  DurationBounds: Bounds
-end
-
-local type StakingTokensExport = { string: StakingTokenConfigExport }
-
-local function getStakingTokens(): StakingTokensExport
-  local stakingTokensExport: StakingTokensExport = {}
-  for tokenId, tokenConfig in pairs(stakingTokens) do
-    stakingTokensExport[tokenId] = {
-      Enabled = tokenConfig.Enabled,
-      QuantityBounds = {
-        Min = tostring(tokenConfig.QuantityBounds.Min),
-        Max = tostring(tokenConfig.QuantityBounds.Max),
-      },
-      DurationBounds = tokenConfig.DurationBounds,
-    }
-  end
-  return stakingTokensExport
+local function getStakingTokens(): StakingTokens
+  return utils.deepcopy(stakingTokens) as StakingTokens
 end
 
 local function getRewardTokens(): RewardTokens
