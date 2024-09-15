@@ -28,7 +28,8 @@ local stakingTokens: StakingTokens = {
       Max = tostring(bint(10):ipow(bint(15))), -- 1000 wAR
     },
     DurationBounds = {
-      Min = 1 * 24 * 60 * 60 * 1000, -- 1 day
+      -- Min = 1 * 24 * 60 * 60 * 1000, -- 1 day
+      Min = 1 * 60 * 1000, -- 1 minute
       Max = 365 * 24 * 60 * 60 * 1000, -- 1 year
     },
   },
