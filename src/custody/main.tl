@@ -22,8 +22,3 @@ Handlers.add(
   Handlers.utils.hasMatchingTag("Action", "Custody.Withdraw"),
   handlers.Withdraw
 )
-
-ao.send({
-  Target = CREATOR_PROCESS,
-  Action = "AckSrc"
-})

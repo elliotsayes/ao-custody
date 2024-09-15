@@ -13,6 +13,12 @@ Send({
   },
   Data = [=[
 ]==] .. src .. [==[
+
+ao.send({
+  Target = Owner,
+  Action = 'AckSrc'
+})
+
 ]=]
 })
 ]==]
