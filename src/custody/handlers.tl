@@ -73,7 +73,7 @@ local function handleWithdraw(msg: Message): any
 
   return msg.reply({
     Status = "Complete",
-    StakeId = activeStake.Id,
+    ['Stake-Id'] = activeStake.Id,
   })
 end
 
