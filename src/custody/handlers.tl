@@ -77,6 +77,35 @@ local function handleWithdraw(msg: Message): any
   })
 end
 
+local function getActiveStakes(msg: Message): any
+  local walletId = msg.Tags['Wallet-Id']
+  if walletId ~= nil then
+    local isValidWallet = parse.validateArweaveId(walletId)
+    if not isValidWallet then
+      return msg.reply({
+        Error = "Invalid Wallet-Id",
+      })
+    end
+
+    local activeStakes = ledger.GetActiveStakesBySender(walletId)
+    return msg.reply({
+      ['Wallet-Id'] = walletId,
+      ['Stake-Count'] = tostring(#activeStakes),
+      Data = json.encode({
+        ActiveStakes = activeStakes,
+      }),
+    })
+  end
+
+  local activeStakes = ledger.GetActiveStakes()
+  return msg.reply({
+    ['Stake-Count'] = tostring(#activeStakes),
+    Data = json.encode({
+      ActiveStakes = activeStakes,
+    }),
+  })
+end
+
 local function handleInfo(msg: Message): any
   local activeStakes = ledger.GetActiveStakes()
   local data = json.encode({
@@ -94,5 +123,6 @@ end
 return {
   Info = handleInfo,
   CreditNotice = handleCreditNotice,
-  Withdraw = handleWithdraw
+  Withdraw = handleWithdraw,
+  GetActiveStakes = getActiveStakes
 }

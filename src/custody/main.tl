@@ -22,3 +22,9 @@ Handlers.add(
   Handlers.utils.hasMatchingTag("Action", "Custody.Withdraw"),
   handlers.Withdraw
 )
+
+Handlers.add(
+  'Custody.Get-Active-Stakes',
+  Handlers.utils.hasMatchingTag("Action", "Custody.Get-Active-Stakes"),
+  handlers.GetActiveStakes
+)
