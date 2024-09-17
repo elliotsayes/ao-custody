@@ -15,7 +15,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "aoform": "^1.0.4",
+    "aoform": "^1.0.5",
     "rimraf": "^6.0.1"
   }
 }
