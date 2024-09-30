@@ -44,7 +44,7 @@ local function newmodule(pkg)
   function pkg.handleRegisterSubscriber(msg)
     local processId = msg.From
 
-    pkg.registerSubscriber(processId, false)
+    pkg.registerSubscriber(processId, true)
     pkg._subscribeToTopics(msg, processId)
   end
 
@@ -316,7 +316,7 @@ local function newmodule(pkg)
     end
     stmt:bind_names({
       process_id = processId,
-      balance = "1",
+      balance = "0",
       whitelisted = whitelisted and 1 or 0
     })
     local _, err = stmt:step()
@@ -527,7 +527,7 @@ local function newmodule(pkg)
 
   function mod.registerSubscriber(processId, whitelisted)
     mod.Subscribers[processId] = mod.Subscribers[processId] or {
-      balance = "1",
+      balance = "0",
       topics = json.encode({}),
       whitelisted = whitelisted and 1 or 0,
     }
