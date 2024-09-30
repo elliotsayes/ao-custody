@@ -29,7 +29,7 @@ local stakingTokens: StakingTokens = {
     },
     DurationBounds = {
       -- Min = 1 * 24 * 60 * 60 * 1000, -- 1 day
-      Min = 1 * 60 * 1000, -- 1 minute
+      Min = 5 * 60 * 1000, -- 5 minutes
       Max = 365 * 24 * 60 * 60 * 1000, -- 1 year
     },
   },
