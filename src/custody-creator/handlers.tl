@@ -16,21 +16,21 @@ local function getWallet(msg: Message): any
   if entry.WalletId == nil then
     return msg.reply({
       Status = "Not Found",
-      WalletId = walletId,
+      ['Wallet-Id'] = walletId,
     })
   end
 
   if entry.ProcessId == nil then
     return msg.reply({
       Status = "Pending",
-      WalletId = entry.WalletId,
+      ['Wallet-Id'] = entry.WalletId,
     })
   end
 
   return msg.reply({
     Status = "Success",
-    WalletId = entry.WalletId,
-    ProcessId = entry.ProcessId,
+    ['Wallet-Id'] = entry.WalletId,
+    ['Process-Id'] = entry.ProcessId,
   })
 end
 
@@ -54,8 +54,8 @@ local function createCustody(msg: Message): any
 
   msg.reply({
     Status = "Complete",
-    WalletId = walletId,
-    ProcessId = processId,
+    ['Wallet-Id'] = walletId,
+    ['Process-Id'] = processId,
   })
 end
 

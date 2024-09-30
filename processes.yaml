@@ -1,7 +1,7 @@
 - name: custody-creator
   # file: build/send_custody_src.lua
   file: build/custody-creator.lua
-  resetModules: false
+  resetModules: true
   # directory: true
   scheduler: _GQ33BkPtZrqxA84vM8Zk-N2aO0toNNu_C-l-rawrBA
   module: C4bxMlK8d_wQ-QpXIIZLU8UWXu6Sd8PDJw7HN3nNE2I
