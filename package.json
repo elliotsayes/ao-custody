@@ -15,6 +15,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@permaweb/aoconnect": "^0.0.61",
+    "@types/node": "^22.9.0",
     "aoform": "^1.0.5",
     "rimraf": "^6.0.1"
   }
